@@ -15,5 +15,5 @@ class Shop(BaseModel, Base):
     """
     __tablename__ = "shops"
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-    products = relationship("Product", backref="shop")
+    products = relationship("Product", backref="shop", cascade='all, delete')
     

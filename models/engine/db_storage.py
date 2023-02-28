@@ -6,6 +6,7 @@ from models.user import User
 from models.shop import Shop
 from models.product import Product
 from models.category import Category
+from models.review import Review
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker, Session
@@ -15,7 +16,8 @@ classes = {
     "User": User,
     "Product": Product,
     "Shop": Shop,
-    'Category': Category
+    'Category': Category,
+    'Review': Review
 }
 
 

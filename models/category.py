@@ -11,4 +11,4 @@ class Category(BaseModel, Base):
         Base (_type_): _description_
     """
     __tablename__ = 'categories'
-    products = relationship('Product', backref='tag')
+    products = relationship('Product', backref='category')

@@ -19,7 +19,8 @@ class User(BaseModel, Base):
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
     username = Column(String(128), nullable=False, unique=True)
-    shops = relationship("Shop", backref="user")
+    shops = relationship("Shop", backref="user", cascade='all, delete')
+    reviews = relationship("Review", backref='user')
     
 
         

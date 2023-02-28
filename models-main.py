@@ -6,6 +6,7 @@ from models.user import User
 from models.shop import Shop
 from models.product import Product
 from models.category import Category
+from models.review import Review
 
 from models import storage
 
@@ -84,10 +85,26 @@ bm = BaseModel(id=id)
 for i in storage.all('User').values():
     print(i)
 
-
 print("\n\n-----This is the query test======\n\n")
 
-print(User.query(email='macaronicareful@eshop.com'))
+print("\n\n-----Tag Model----\n\n")
+
+for i in User.all():
+    print(i)
+
+print("\n\n-----User Model----\n\n")
+[print(i) for i in User.all()]
+print("\n\n-----Shop Model----\n\n")
+[print(i) for i in Shop.all()]
+print("\n\n-----Category Model----\n\n")
+[print(i) for i in Category.all()]
+print("\n\n-----Products Model----\n\n")
+[print(i) for i in Product.all()]
+print("\n\n-----Review Model----\n\n")
+[print(i) for i in Review.all()]
+
+
+print(User.query(email='hushedtremendous@eshop.com'))
 
 print(Category.query(name='Books'))
 

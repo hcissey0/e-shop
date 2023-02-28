@@ -6,6 +6,7 @@ from models.user import User
 from models.shop import Shop
 from models.product import Product
 from models.category import Category
+from models.review import Review
 
 import random
 import random_name_generator.resources.name_generator as rng
@@ -60,7 +61,15 @@ def main():
                     product = Product(name=product_name, price=price, image_name=image_name)
                     shop.products.append(product)
                     category.products.append(product)
+                    rand4 = random.randint(1, 45)
+                    for m in range(rand4):
+                        review_name = rng.generate_name()[4:-5].capitalize()
+                        text = f"This is a review made by {user_name} on {product_name}"
+                        review = Review(name=review_name, text=text)
+                        product.reviews.append(review)
+                        user.reviews.append(review)
 
+                        review.save()
                     product.save()
                 category.save()
             shop.save()

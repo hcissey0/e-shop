@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Carousel Start -->
+<div class="container-fluid mb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3"> Shops</span></h2>
+    <div class="row">
+        {% for shop in shops|sort %}
+        <div class="col-sm col-lg-4">
+            <div class="product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="../static/img/{{shop.image_name}}" alt="">
+                <div class="offer-text">
+                    <h3 class="text-white mb-3">{{shop.name|capitalize}}</h3>
+                    <a href="/shops/{{shop.id}}" class="btn btn-primary mb-3">Open Shop</a>
+                    <small class="text-white ">Owner: {{shop.user.name}}</small>
+                </div>
+            </div>
+        </div>
+        {% if loop.index % 3 == 0 %}
+        <div class="w-100"></div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<!-- Carousel End -->
+
+{% endblock %}

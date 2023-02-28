@@ -12,8 +12,14 @@
             {% for product in shop.products %}
             <li>
                 <h3>Product: {{product.name}}</h3>
-                <p>Tag: {{product.tag.name}}</p>
+                <p>Tag: {{product.category.name}}</p>
                 <p>Price: {{product.price}}</p>
+                <p>Reviews:</p>
+                <ul>
+                  {% for review in product.reviews %}
+                  <li>{{review.text}}</li>
+                  {% endfor %}
+                </ul>
             </li>
             {% endfor %}
         </ul>
