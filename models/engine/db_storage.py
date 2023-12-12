@@ -7,6 +7,8 @@ from models.shop import Shop
 from models.product import Product
 from models.category import Category
 from models.review import Review
+from models.cart import Cart
+import models
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker, Session
@@ -17,7 +19,8 @@ classes = {
     "Product": Product,
     "Shop": Shop,
     'Category': Category,
-    'Review': Review
+    'Review': Review,
+    'Cart': Cart
 }
 
 
@@ -81,3 +84,8 @@ class DBStorage():
 
     def close(self):
         self.__session.remove()
+
+    def count(self, cls=None):
+        if cls and (cls in classes.keys() or cls in classes.values()):
+            return len(models.storage.all(cls).values())
+        return len(models.storage.all().values())

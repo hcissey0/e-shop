@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row mb-5">
+        <div class="col-12 mb-30">
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3"> Shop details</span></h2>
+            <form action="/edit-shop/{{shop.id}}" method="post">
+                <div class="form-group">
+                    <label for="id">Shop ID:</label>
+                    <input class="form-control" type="text" name="id" id="id" value="{{shop.id}}" disabled>
+                </div>
+                <label for="name">Shop Name:</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="name" id="name" value="{{shop.name}}">
+                    <div class="input-group-append">
+                        <button type="submit" class="input-group-text bg-transparent text-primary">
+                            Update
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="owner">Shop Owner</label>
+                    <input type="text" name="owner" class="form-control" id="owner" value="{{shop.user.name}}" disabled>
+                </div>
+            </form>
+            <div class="col-12 d-flex justify-content-center">
+                <a href="/delete-shop/{{shop.id}}" class="btn btn-danger">Delete shop</a>
+            </div>
+        </div>
+        
+        <div class="col-12">
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3"> Products in shop</span></h2>
+            <div class="container-fluid d-flex justify-content-end mb-4">
+                <a href="/create-product/{{shop.id}}" class="btn btn-primary">Add Product</a>
+            </div>
+            <div class="row">
+                {% for product in shop.products %}
+                    <div class="col-6 col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="../static/img/{{product.image_name}}" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-danger btn-square" href="/delete-product/{{product.id}}"><i class="fa fa-times"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="/products/{{product.id}}"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">{{product.name}}</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>${{product.price}}</h5><h6 class="text-muted ml-2"></h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small>({{product.reviews|count}})</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -16,7 +16,7 @@ class BaseModel:
     """
     
     id = Column(String(60), primary_key=True)
-    name = Column(String(128), nullable=False)
+    name = Column(String(128), nullable=True)
     image_name = Column(String(128), nullable=True, default="none.jpg")
     created_at = Column(DateTime, default=datetime.utcnow())
     updated_at = Column(DateTime, default=datetime.utcnow())
@@ -48,6 +48,23 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if hasattr(self, 'cart'):
+            new_dict['cart'] = self.cart.id
+        if hasattr(self, 'shops'):
+            shop_list = []
+            for shop in self.shops:
+                shop_list.append(shop.id)
+            new_dict['shops'] = shop_list
+        if hasattr(self, 'reviews'):
+            review_list = []
+            for review in self.reviews:
+                review_list.append(review.id)
+            new_dict['reviews'] = review_list
+        if hasattr(self, 'products'):
+            product_list = []
+            for product in self.products:
+                product_list.append(product.id)
+            new_dict['products'] = product_list
         return new_dict
 
     def save(self):
@@ -81,6 +98,16 @@ class BaseModel:
             list: The list of objects
         """
         return list(models.storage.all(cls).values())
+
+    def update(self, **kwargs):
+        ignore = ['id', 'created_at', 'updated_at']
+        if kwargs:
+            for k, v in kwargs.items():
+                if k not in ignore:
+                    setattr(self, k, v)
+            self.save()
+            return self.to_dict()
+        return None
 
     def __lt__(self, other):
         if isinstance(other, BaseModel):

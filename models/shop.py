@@ -14,6 +14,5 @@ class Shop(BaseModel, Base):
         BaseModel (Object): The base model or template
     """
     __tablename__ = "shops"
-    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'))
     products = relationship("Product", backref="shop", cascade='all, delete')
-    

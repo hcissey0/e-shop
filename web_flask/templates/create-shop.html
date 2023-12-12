@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid w-50">
+    <div class="container-fluid d-flex justify-content-center align-items-center pb-4">
+        <i class="fa fa-shop text-dark border border-dark rounded-circle p-4" style="font-size: 4em;"></i>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/create-shop" method="post">
+                <div class="form-group">
+                    <label for="name">Shop name: </label>
+                    <input type="text" name="name" id="name" class="form-control">
+                </div>
+                <div class="container-fluid d-flex justify-content-center align-items-center pb-4">
+                    <button type="submit" class="btn btn-primary">
+                        Create Shop
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

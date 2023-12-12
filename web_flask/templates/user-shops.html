@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid w-100 d-flex justify-content-end pb-3">
+    <a href="/create-shop/" class="btn btn-success">Create a Shop</a>
+</div>
+
+<!-- Carousel Start -->
+{% if current_user.shops %}
+<div class="container-fluid mb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3"> Here are your shops, {{current_user.first_name}}</span></h2>
+    <div class="row">
+        {% for shop in current_user.shops|sort %}
+        <div class="col-sm-4 col-lg-3 col-6">
+            <div class="product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="../static/img/{{shop.image_name}}" alt="">
+                <div class="offer-text">
+                    <h3 class="text-white mb-3">{{shop.name|capitalize}}</h3>
+                    <div class="row px-3">
+                        <div class="col-6">
+                            <a href="/manage-shop/{{shop.id}}" class="btn btn-primary mb-3">Manage Shop</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="/delete-shop/{{shop.id}}" class="btn btn-danger mb-3">Delete Shop</a>
+                        </div>
+                    </div>
+                    <small class="text-white ">Owner: you</small>
+                </div>
+            </div>
+        </div>
+        
+        {% endfor %}
+    </div>
+</div>
+<!-- Carousel End -->
+{% else %}
+
+<div class="container-fluid">
+    <h1>You have no outstanding shops.</h1>
+    <br>
+    <h2><a class="btn btn-primary" href="/create-shop">Create One</a></h2>
+</div>
+
+{% endif %}
+
+{% endblock %}

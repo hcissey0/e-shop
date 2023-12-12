@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if search_list %}
+<div class="container-fluid">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3"> Search results for "{{key}}"</span></h2>
+<div class="row">
+    {% for product in search_list %}
+                    <div class="col-6 col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="../static/img/{{product.image_name}}" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href="/add-to-cart/{{product.id}}"><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="/products/{{product.id}}"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">{{product.name}}</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>${{product.price}}</h5><h6 class="text-muted ml-2"></h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small>({{product.reviews|count}})</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+</div>
+</div>
+{% else %}
+<div class="container-fluid">
+    <h1>No results found for "{{key}}"</h1>
+</div>
+{% endif %}
+
+
+{% endblock %}

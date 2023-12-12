@@ -17,7 +17,7 @@ class Product(BaseModel, Base):
     shop_id = Column(String(60), ForeignKey('shops.id'), nullable=False)
     category_id = Column(String(60), ForeignKey('categories.id'), nullable=False)
     price = Column(Float(2), nullable=False)
+    description = Column(String(2048), nullable=True)
+    about = Column(String(1024), nullable=True)
     reviews = relationship("Review", backref='product', cascade='all, delete')
-
-
         

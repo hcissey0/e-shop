@@ -7,6 +7,7 @@ from models.shop import Shop
 from models.product import Product
 from models.category import Category
 from models.review import Review
+from models.cart import Cart
 
 import random
 import random_name_generator.resources.name_generator as rng
@@ -23,7 +24,7 @@ shop_images = [
 
 def main():
     """This is to add objects to the database"""
-    for i in range(5):
+    for i in range(1, random.randint(1, 20)):
         first_name = rng.generate_name()[4:-5].capitalize()
         last_name = rng.generate_name()[4:-5].capitalize()
         user_name = first_name + " " + last_name
@@ -40,6 +41,7 @@ def main():
         }
         user = User(**det)
         rand1 = random.randint(1, 2)
+        user.cart = Cart(name=(first_name + "'s cart"))
         
         for j in range(rand1):
             shop_name = rng.generate_name()[4:-5].capitalize()
@@ -62,6 +64,9 @@ def main():
                     shop.products.append(product)
                     category.products.append(product)
                     rand4 = random.randint(1, 45)
+                    if random.randint(1, 2) == 2:
+                        user.cart.products.append(product)
+                    
                     for m in range(rand4):
                         review_name = rng.generate_name()[4:-5].capitalize()
                         text = f"This is a review made by {user_name} on {product_name}"
@@ -81,12 +86,12 @@ def main():
 if __name__ == "__main__":
     main()
 
-    print("\n"*3)
-    print("--"*4, "Everything", "--"*4)
-    print("\n"*3)
-    for i in storage.all().values():
-        print(i)
-        print("--"*10)
+    # print("\n"*3)
+    # print("--"*4, "Everything", "--"*4)
+    # print("\n"*3)
+    # for i in storage.all().values():
+    #     print(i)
+    #     print("--"*10)
 
     print("\n"*3)
     print("--"*4, "Users", "--"*4)
@@ -116,5 +121,7 @@ if __name__ == "__main__":
     print("\n"*3)
     for i in storage.all("Category").values():
         print(i)
-        print("--"*10)
+        print("--"*60)
+
+    
     
