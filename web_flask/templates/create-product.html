@@ -21,7 +21,7 @@
             <label for="category_name">Category: </label>
             <select class="form-control" id="category_name" name="category_name">
                 <option value="Select" selected>Select</option>
-                {% for cat in categories %}
+                {% for cat in categories|sort %}
                 <option value="{{cat.name}}">{{cat.name}}</option>
                 {% endfor %}
             </select>

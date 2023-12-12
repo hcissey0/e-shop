@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask import render_template, request, url_for, flash, redirect, abort
 from web_flask.views import auth
 from models.user import User
@@ -18,7 +19,7 @@ def login():
         if not user:
             flash('Invalid Email', 'danger')
             return redirect(url_for('auth.login'))
-        if user.password != password:
+        if not user.check_password(password):
             flash('Wrong Password', 'danger')
             return redirect(url_for('auth.login'))
         login_user(user)
