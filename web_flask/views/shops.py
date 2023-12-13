@@ -11,14 +11,14 @@ import uuid
 
 @main.route("/shops", strict_slashes=False)
 def shops_list():
-    return render_template('shop-list.html', shops=Shop.all(), cache_id= uuid.uuid4())
+    return render_template('shop-list.html', shops=Shop.all(), cache_id=uuid.uuid4())
 
 
 @main.route('/shops/<shop_id>', strict_slashes=False)
 def shop(shop_id):
     shop = Shop.query(id=shop_id)
     if shop:
-        return render_template('shop.html', shop=shop)
+        return render_template('shop.html', shop=shop, cache_id=uuid.uuid4())
     abort(404)
 
 @main.route('/edit-shop/<shop_id>', methods=['POST'], strict_slashes=False)
@@ -37,7 +37,7 @@ def manage_shop(shop_id):
     shop = Shop.query(id=shop_id)
     if not shop:
         abort(404)
-    return render_template('manage-shop.html', shop=shop)
+    return render_template('manage-shop.html', shop=shop, cache_id=uuid.uuid4())
 
 @main.route('/delete-shop/<shop_id>', strict_slashes=False)
 def delete_shop(shop_id):
@@ -67,5 +67,5 @@ def create_shop():
         current_user.save()
         flash('Shop created successfully', 'success')
         return redirect(url_for('main.user_shops'))
-    return render_template('create-shop.html', )
+    return render_template('create-shop.html', cache_id=uuid.uuid4())
 

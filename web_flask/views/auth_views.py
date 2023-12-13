@@ -1,12 +1,10 @@
 #!/usr/bin/python3
 
-from werkzeug.security import check_password_hash, generate_password_hash
-from flask import render_template, request, url_for, flash, redirect, abort
+from flask import render_template, request, url_for, flash, redirect
 from web_flask.views import auth
 from models.user import User
-from models import storage
-from flask_login import login_user, logout_user, current_user, login_required
-
+from flask_login import login_user, logout_user
+import uuid
 
 
 @auth.route('/login', methods=['GET', 'POST'], strict_slashes=False)
@@ -24,12 +22,14 @@ def login():
             return redirect(url_for('auth.login'))
         login_user(user)
         return redirect(url_for('main.home'))
-    return render_template('login.html')
+    return render_template('login.html', cache_id=uuid.uuid4())
+
 
 @auth.route('/logout', strict_slashes=False)
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
 
 @auth.route('/signup', methods=['GET', 'POST'], strict_slashes=False)
 def signup():
@@ -66,7 +66,4 @@ def signup():
         return redirect(url_for('auth.login'))
 
 
-    return render_template('signup.html')
-
-
-
+    return render_template('signup.html', cache_id=uuid.uuid4())

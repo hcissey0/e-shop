@@ -14,14 +14,14 @@ import uuid
 @login_required
 def user_shops():
     return render_template('user-shops.html',
-                           categories= Category.all()
+                           categories= Category.all(), cache_id=uuid.uuid4()
                            )
 
 
 @main.route('/user-cart', strict_slashes=False)
 @login_required
 def user_cart():
-    return render_template('user-cart.html')
+    return render_template('user-cart.html', cache_id=uuid.uuid4())
 
 
 @main.route('/add-to-cart/<product_id>', strict_slashes=False)
@@ -75,7 +75,7 @@ def user_details(user_id):
         user.save()
         flash('Changes made successfully', 'success')
         return redirect(url_for('main.user_details', user_id=user_id))
-    return render_template('user-details.html')
+    return render_template('user-details.html', cache_id=uuid.uuid4())
 
 
 @main.route('/change-password/<user_id>', methods=['GET', 'POST'], strict_slashes=False)
@@ -97,5 +97,5 @@ def change_password(user_id):
         user.update(password=new_password)
         flash('Password changed successfully', 'success')
         return redirect(url_for('main.user_details', user_id=user.id))
-    return render_template('change-password.html')
+    return render_template('change-password.html', cache_id=uuid.uuid4())
 

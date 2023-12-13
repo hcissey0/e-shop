@@ -6,14 +6,15 @@ from models.product import Product
 from models.category import Category
 from models.shop import Shop
 from web_flask.views import main
-from flask_login import login_required, current_user
+from flask_login import login_required
+import uuid
 
 @main.route('/products/<product_id>', strict_slashes=False)
 def product_details(product_id):
     product = Product.query(id=product_id)
     if not product:
         abort(404)
-    return render_template('product-detail.html', product=product)
+    return render_template('product-detail.html', product=product, cache_id=uuid.uuid4())
 
 
 @main.route('/search', methods=['GET', 'POST'], strict_slashes=False)
@@ -28,7 +29,7 @@ def search_product():
                 if arg in p.name.lower():
                     search_list.append(p)
 
-    return render_template('search.html', key=key, search_list=search_list)
+    return render_template('search.html', key=key, search_list=search_list, cache_id=uuid.uuid4())
 
 
 
@@ -67,7 +68,7 @@ def create_product(shop_id):
         flash('Product created successfully', 'success')
         return redirect(url_for('main.manage_shop', shop_id=shop_id))
     
-    return render_template('create-product.html', shop=shop, categories=categories)
+    return render_template('create-product.html', shop=shop, categories=categories, cache_id=uuid.uuid4())
 
 @main.route('/delete-product/<product_id>', strict_slashes=False)
 def delete_product(product_id):
