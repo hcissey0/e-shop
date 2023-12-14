@@ -86,7 +86,7 @@ def change_password(user_id):
         abort(404)
     if request.method == 'POST':
         old_password = request.form.get('old_password')
-        if user.password != old_password:
+        if not user.check_password(old_password):
             flash('Wrong password', 'danger')
             return redirect(url_for('main.change_password', user_id=user.id))
         new_password = request.form.get('new_password')
